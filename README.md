@@ -7,7 +7,6 @@ The Pelindo Biodata Backend is a RESTful API built with Node.js, Express.js, and
 ## 📚 Documentation
 
 -   **[Complete API Documentation](./API_DOCUMENTATION.md)** - Comprehensive guide with all endpoints, request/response formats, and setup instructions
--   **[Sequelize CLI Guide](./SEQUELIZE_CLI_GUIDE.md)** - Complete guide for database operations, migrations, and seeders
 
 ## Features
 
