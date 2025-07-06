@@ -7,7 +7,6 @@ function tokenSign(payload) {
 }
 
 function tokenVerif(token) {
-    console.log(token, "<<< token");
     return jwt.verify(token, SECRET);
 }
 

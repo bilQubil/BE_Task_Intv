@@ -10,7 +10,6 @@ class BiodataController {
     static async getBiodata(req, res, next) {
         try {
             const userId = req.user.id;
-            // console.log(userId, "userId");
             const biodata = await Biodata.findOne({ where: { userId } });
             if (!biodata)
                 return res.status(404).json({ message: "Biodata not found" });

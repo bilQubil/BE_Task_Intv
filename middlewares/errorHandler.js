@@ -1,5 +1,4 @@
 function errorHandler(err, req, res, next) {
-    console.log(err, "<<< err");
     if (
         err.name === "SequelizeValidationError" ||
         err.name === "SequelizeUniqueConstraintError"

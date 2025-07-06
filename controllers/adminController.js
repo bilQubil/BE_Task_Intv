@@ -81,10 +81,8 @@ class AdminController {
                     .json({ message: "Invalid education data" });
             }
 
-            // Delete existing education histories for this biodata
             await EducationHistory.destroy({ where: { biodataId: id } });
 
-            // Create new education histories
             const educationData = EducationHistories.map((edu) => ({
                 ...edu,
                 biodataId: parseInt(id),
@@ -141,10 +139,8 @@ class AdminController {
                 return res.status(400).json({ message: "Invalid job data" });
             }
 
-            // Delete existing job histories for this biodata
             await JobHistory.destroy({ where: { biodataId: id } });
 
-            // Create new job histories
             const jobData = JobHistories.map((job) => ({
                 ...job,
                 biodataId: parseInt(id),
@@ -199,10 +195,8 @@ class AdminController {
                     .json({ message: "Invalid training data" });
             }
 
-            // Delete existing training histories for this biodata
             await TrainingHistory.destroy({ where: { biodataId: id } });
 
-            // Create new training histories
             const trainingData = TrainingHistories.map((training) => ({
                 ...training,
                 biodataId: parseInt(id),

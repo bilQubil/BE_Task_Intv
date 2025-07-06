@@ -12,7 +12,6 @@ module.exports = {
             biodataId: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
-                unique: true,
                 references: {
                     model: "Biodata",
                     key: "id",
