@@ -62,8 +62,53 @@ class AdminController {
     static async getEducationHistoryById(req, res, next) {
         try {
             const { id } = req.params;
-            const educationHistory = await EducationHistory.findByPk(id);
-            res.json(educationHistory);
+            const educationHistories = await EducationHistory.findAll({
+                where: { biodataId: id },
+            });
+            res.json(educationHistories);
+        } catch (error) {
+            next(error);
+        }
+    }
+    static async updateEducationHistory(req, res, next) {
+        try {
+            const { id } = req.params;
+            const { EducationHistories } = req.body;
+
+            if (!EducationHistories || !Array.isArray(EducationHistories)) {
+                return res
+                    .status(400)
+                    .json({ message: "Invalid education data" });
+            }
+
+            // Delete existing education histories for this biodata
+            await EducationHistory.destroy({ where: { biodataId: id } });
+
+            // Create new education histories
+            const educationData = EducationHistories.map((edu) => ({
+                ...edu,
+                biodataId: parseInt(id),
+            }));
+
+            const createdEducation = await EducationHistory.bulkCreate(
+                educationData
+            );
+            res.json(createdEducation);
+        } catch (error) {
+            next(error);
+        }
+    }
+    static async deleteEducationHistory(req, res, next) {
+        try {
+            const { educationId } = req.params;
+            const deleted = await EducationHistory.destroy({
+                where: { id: educationId },
+            });
+            if (!deleted)
+                return res
+                    .status(404)
+                    .json({ message: "Education history not found" });
+            res.json({ message: "Education history deleted" });
         } catch (error) {
             next(error);
         }
@@ -79,8 +124,47 @@ class AdminController {
     static async getJobHistoryById(req, res, next) {
         try {
             const { id } = req.params;
-            const jobHistory = await JobHistory.findByPk(id);
-            res.json(jobHistory);
+            const jobHistories = await JobHistory.findAll({
+                where: { biodataId: id },
+            });
+            res.json(jobHistories);
+        } catch (error) {
+            next(error);
+        }
+    }
+    static async updateJobHistory(req, res, next) {
+        try {
+            const { id } = req.params;
+            const { JobHistories } = req.body;
+
+            if (!JobHistories || !Array.isArray(JobHistories)) {
+                return res.status(400).json({ message: "Invalid job data" });
+            }
+
+            // Delete existing job histories for this biodata
+            await JobHistory.destroy({ where: { biodataId: id } });
+
+            // Create new job histories
+            const jobData = JobHistories.map((job) => ({
+                ...job,
+                biodataId: parseInt(id),
+            }));
+
+            const createdJobs = await JobHistory.bulkCreate(jobData);
+            res.json(createdJobs);
+        } catch (error) {
+            next(error);
+        }
+    }
+    static async deleteJobHistory(req, res, next) {
+        try {
+            const { jobId } = req.params;
+            const deleted = await JobHistory.destroy({ where: { id: jobId } });
+            if (!deleted)
+                return res
+                    .status(404)
+                    .json({ message: "Job history not found" });
+            res.json({ message: "Job history deleted" });
         } catch (error) {
             next(error);
         }
@@ -96,8 +180,53 @@ class AdminController {
     static async getTrainingHistoryById(req, res, next) {
         try {
             const { id } = req.params;
-            const trainingHistory = await TrainingHistory.findByPk(id);
-            res.json(trainingHistory);
+            const trainingHistories = await TrainingHistory.findAll({
+                where: { biodataId: id },
+            });
+            res.json(trainingHistories);
+        } catch (error) {
+            next(error);
+        }
+    }
+    static async updateTrainingHistory(req, res, next) {
+        try {
+            const { id } = req.params;
+            const { TrainingHistories } = req.body;
+
+            if (!TrainingHistories || !Array.isArray(TrainingHistories)) {
+                return res
+                    .status(400)
+                    .json({ message: "Invalid training data" });
+            }
+
+            // Delete existing training histories for this biodata
+            await TrainingHistory.destroy({ where: { biodataId: id } });
+
+            // Create new training histories
+            const trainingData = TrainingHistories.map((training) => ({
+                ...training,
+                biodataId: parseInt(id),
+            }));
+
+            const createdTraining = await TrainingHistory.bulkCreate(
+                trainingData
+            );
+            res.json(createdTraining);
+        } catch (error) {
+            next(error);
+        }
+    }
+    static async deleteTrainingHistory(req, res, next) {
+        try {
+            const { trainingId } = req.params;
+            const deleted = await TrainingHistory.destroy({
+                where: { id: trainingId },
+            });
+            if (!deleted)
+                return res
+                    .status(404)
+                    .json({ message: "Training history not found" });
+            res.json({ message: "Training history deleted" });
         } catch (error) {
             next(error);
         }

@@ -2,15 +2,25 @@
 
 ## Overview
 
-The Pelindo Biodata Backend is a Node.js application that serves as the backend API for the Pelindo Biodata Application. It provides endpoints for managing user biodata, including authentication, authorization, and CRUD operations for various biodata components.
+The Pelindo Biodata Backend is a RESTful API built with Node.js, Express.js, and Sequelize ORM for managing employee biodata, education history, job history, and training history. It features JWT authentication, role-based access control, and comprehensive data validation.
+
+## 📚 Documentation
+
+-   **[Complete API Documentation](./API_DOCUMENTATION.md)** - Comprehensive guide with all endpoints, request/response formats, and setup instructions
+-   **[Sequelize CLI Guide](./SEQUELIZE_CLI_GUIDE.md)** - Complete guide for database operations, migrations, and seeders
 
 ## Features
 
--   User Authentication and Authorization
--   Biodata Management
--   Education History Management
--   Training History Management
--   Job History Management
+-   🔐 JWT Authentication and Authorization
+-   👤 User Registration and Login
+-   📋 Biodata Management (CRUD operations)
+-   🎓 Education History Management
+-   🏢 Job History Management
+-   📚 Training History Management
+-   👑 Admin Panel for managing all user data
+-   ✅ Input validation with Zod
+-   🔒 Password hashing with bcryptjs
+-   🌐 CORS support
 
 ## Project Structure
 
@@ -31,41 +41,71 @@ The Pelindo Biodata Backend is a Node.js application that serves as the backend 
 -   **routes/**: Express routers for different endpoints.
 -   **seeders/**: Database seeder files.
 
-## Installation
+## Quick Start
 
-1. Clone the repository:
+1. **Clone and install dependencies:**
 
     ```bash
     git clone <repository-url>
     cd pelindo_biodata_app/BE-Core
-    ```
-
-2. Install dependencies:
-
-    ```bash
     npm install
     ```
 
-3. Set up environment variables by creating a `.env` file based on the `.env.example` file.
+2. **Set up environment variables:**
 
-4. Run database migrations and seeders:
+    ```bash
+    cp .env.example .env
+    # Edit .env with your database credentials
+    ```
+
+3. **Set up the database:**
+
     ```bash
     npm run db:migrate
-    npm run db:seed
+    npm run db:seed  # Optional: Add sample data
     ```
 
-## Usage
-
--   Start the application in development mode:
-
+4. **Start the server:**
     ```bash
-    npm run dev
+    npm run dev  # Development mode
+    npm start    # Production mode
     ```
 
--   Start the application in production mode:
-    ```bash
-    npm start
-    ```
+The server will run on `http://localhost:3000` by default.
+
+## API Usage
+
+### Authentication
+
+```bash
+# Register a new user
+POST /auth/register
+{
+  "email": "user@example.com",
+  "password": "Password123"
+}
+
+# Login
+POST /auth/login
+{
+  "email": "user@example.com",
+  "password": "Password123"
+}
+```
+
+### Biodata Operations
+
+```bash
+# Get user's biodata
+GET /biodata/me
+Headers: Authorization: Bearer <token>
+
+# Create biodata
+POST /biodata
+Headers: Authorization: Bearer <token>
+```
+
+For complete API documentation, see [API_DOCUMENTATION.md](./API_DOCUMENTATION.md)
 
 ## Scripts
 

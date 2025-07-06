@@ -9,19 +9,39 @@ class HistoryController {
     static async addEducationHistory(req, res, next) {
         try {
             const {
-                biodataId,
                 educationLevel,
                 institutionName,
                 major,
                 graduationYear,
                 gpa,
             } = req.body;
-            const biodata = await Biodata.findByPk(biodataId);
+            if (
+                !educationLevel ||
+                !institutionName ||
+                !major ||
+                !graduationYear ||
+                !gpa
+            ) {
+                return res
+                    .status(400)
+                    .json({ message: "All fields are required" });
+            }
+            const userId = req.user.id;
+            const biodata = await Biodata.findOne({ where: { userId } });
+            if (biodata) {
+                const educationHistory = await EducationHistory.findOne({
+                    where: { biodataId: biodata.id },
+                });
+                if (educationHistory) {
+                    return res
+                        .status(400)
+                        .json({ message: "Education history already exists" });
+                }
+            }
             if (!biodata)
                 return res.status(404).json({ message: "Biodata not found" });
-
             const newEducationHistory = await EducationHistory.create({
-                biodataId,
+                biodataId: biodata.id,
                 educationLevel,
                 institutionName,
                 major,
@@ -36,14 +56,29 @@ class HistoryController {
 
     static async addJobHistory(req, res, next) {
         try {
-            const { biodataId, companyName, lastPosition, lastSalary, year } =
-                req.body;
-            const biodata = await Biodata.findByPk(biodataId);
+            const { companyName, lastPosition, lastSalary, year } = req.body;
+            if (!companyName || !lastPosition || !lastSalary || !year) {
+                return res
+                    .status(400)
+                    .json({ message: "All fields are required" });
+            }
+            const userId = req.user.id;
+            const biodata = await Biodata.findOne({ where: { userId } });
+            if (biodata) {
+                const jobHistory = await JobHistory.findOne({
+                    where: { biodataId: biodata.id },
+                });
+                if (jobHistory) {
+                    return res
+                        .status(400)
+                        .json({ message: "Job history already exists" });
+                }
+            }
             if (!biodata)
                 return res.status(404).json({ message: "Biodata not found" });
 
             const newJobHistory = await JobHistory.create({
-                biodataId,
+                biodataId: biodata.id,
                 companyName,
                 lastPosition,
                 lastSalary,
@@ -57,13 +92,29 @@ class HistoryController {
 
     static async addTrainingHistory(req, res, next) {
         try {
-            const { biodataId, courseName, hasCertificate, year } = req.body;
-            const biodata = await Biodata.findByPk(biodataId);
+            const { courseName, hasCertificate, year } = req.body;
+            if (!courseName || !hasCertificate || !year) {
+                return res
+                    .status(400)
+                    .json({ message: "All fields are required" });
+            }
+            const userId = req.user.id;
+            const biodata = await Biodata.findOne({ where: { userId } });
+            if (biodata) {
+                const trainingHistory = await TrainingHistory.findOne({
+                    where: { biodataId: biodata.id },
+                });
+                if (trainingHistory) {
+                    return res
+                        .status(400)
+                        .json({ message: "Training history already exists" });
+                }
+            }
             if (!biodata)
                 return res.status(404).json({ message: "Biodata not found" });
 
             const newTrainingHistory = await TrainingHistory.create({
-                biodataId,
+                biodataId: biodata.id,
                 courseName,
                 hasCertificate,
                 year,
