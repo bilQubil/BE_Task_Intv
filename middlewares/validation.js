@@ -1,6 +1,5 @@
 const { z } = require("zod");
 
-// Validation schemas
 const registerSchema = z.object({
     email: z.string().email("Invalid email format").min(1, "Email is required"),
     password: z

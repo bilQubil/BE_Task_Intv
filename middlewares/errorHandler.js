@@ -1,4 +1,5 @@
 function errorHandler(err, req, res, next) {
+    console.log(err, "<<< err");
     if (
         err.name === "SequelizeValidationError" ||
         err.name === "SequelizeUniqueConstraintError"
@@ -12,7 +13,7 @@ function errorHandler(err, req, res, next) {
         });
     } else if (err.name === "AuthenticationError") {
         res.status(401).json({
-            message: err.message,
+            message: err.message || "Invalid email or password",
         });
     } else if (
         err.name === "Unauthenticated" ||
@@ -21,7 +22,7 @@ function errorHandler(err, req, res, next) {
         res.status(401).json({
             message: "Error: Authentication failed. Access denied.",
         });
-    } else if (err.name === "Unauthorized") {
+    } else if (err.name === "Unauthorized" || err.name === "Forbidden") {
         res.status(403).json({
             message:
                 "Error: Forbidden. You are not authorized to access this resource.",
