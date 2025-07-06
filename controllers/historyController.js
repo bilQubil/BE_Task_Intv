@@ -73,6 +73,63 @@ class HistoryController {
             next(error);
         }
     }
+
+    static async getEducationHistory(req, res, next) {
+        try {
+            const userId = req.user.id;
+            const biodata = await Biodata.findOne({ where: { userId } });
+            if (!biodata) {
+                throw { name: "NotFound" };
+            }
+            const educationHistories = await EducationHistory.findAll({
+                where: { biodataId: biodata.id },
+            });
+            if (!educationHistories.length) {
+                throw { name: "NotFound" };
+            }
+            res.status(200).json(educationHistories);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async getJobHistory(req, res, next) {
+        try {
+            const userId = req.user.id;
+            const biodata = await Biodata.findOne({ where: { userId } });
+            if (!biodata) {
+                throw { name: "NotFound" };
+            }
+            const jobHistories = await JobHistory.findAll({
+                where: { biodataId: biodata.id },
+            });
+            if (!jobHistories.length) {
+                throw { name: "NotFound" };
+            }
+            res.status(200).json(jobHistories);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async getTrainingHistory(req, res, next) {
+        try {
+            const userId = req.user.id;
+            const biodata = await Biodata.findOne({ where: { userId } });
+            if (!biodata) {
+                throw { name: "NotFound" };
+            }
+            const trainingHistories = await TrainingHistory.findAll({
+                where: { biodataId: biodata.id },
+            });
+            if (!trainingHistories.length) {
+                throw { name: "NotFound" };
+            }
+            res.status(200).json(trainingHistories);
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 module.exports = HistoryController;

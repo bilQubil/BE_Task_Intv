@@ -9,6 +9,10 @@ router.use(authentication);
 router.get("/me", biodataController.getBiodata);
 router.post("/", biodataController.postBiodata);
 
+router.get("/education", historyController.getEducationHistory);
+router.get("/job", historyController.getJobHistory);
+router.get("/training", historyController.getTrainingHistory);
+
 router.post("/education", historyController.addEducationHistory);
 router.post("/job", historyController.addJobHistory);
 router.post("/training", historyController.addTrainingHistory);

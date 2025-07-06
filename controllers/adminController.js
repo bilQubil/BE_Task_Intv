@@ -1,7 +1,11 @@
-const { Biodata } = require("../models");
+const {
+    Biodata,
+    EducationHistory,
+    JobHistory,
+    TrainingHistory,
+} = require("../models");
 
 class AdminController {
-    // GET /admin/biodata
     static async getBiodata(req, res, next) {
         try {
             const biodata = await Biodata.findAll();
@@ -10,7 +14,6 @@ class AdminController {
             next(error);
         }
     }
-    // GET /admin/biodata/:id
     static async getBiodataById(req, res, next) {
         try {
             const { id } = req.params;
@@ -22,7 +25,6 @@ class AdminController {
             next(error);
         }
     }
-    // PUT /admin/biodata/:id
     static async updateBiodata(req, res, next) {
         try {
             const { id } = req.params;
@@ -38,7 +40,6 @@ class AdminController {
             next(error);
         }
     }
-    // DELETE /admin/biodata/:id
     static async deleteBiodata(req, res, next) {
         try {
             const { id } = req.params;
@@ -46,6 +47,57 @@ class AdminController {
             if (!deleted)
                 return res.status(404).json({ message: "Biodata not found" });
             res.json({ message: "Biodata deleted" });
+        } catch (error) {
+            next(error);
+        }
+    }
+    static async getEducationHistories(req, res, next) {
+        try {
+            const educationHistories = await EducationHistory.findAll();
+            res.json(educationHistories);
+        } catch (error) {
+            next(error);
+        }
+    }
+    static async getEducationHistoryById(req, res, next) {
+        try {
+            const { id } = req.params;
+            const educationHistory = await EducationHistory.findByPk(id);
+            res.json(educationHistory);
+        } catch (error) {
+            next(error);
+        }
+    }
+    static async getJobHistories(req, res, next) {
+        try {
+            const jobHistories = await JobHistory.findAll();
+            res.json(jobHistories);
+        } catch (error) {
+            next(error);
+        }
+    }
+    static async getJobHistoryById(req, res, next) {
+        try {
+            const { id } = req.params;
+            const jobHistory = await JobHistory.findByPk(id);
+            res.json(jobHistory);
+        } catch (error) {
+            next(error);
+        }
+    }
+    static async getTrainingHistories(req, res, next) {
+        try {
+            const trainingHistories = await TrainingHistory.findAll();
+            res.json(trainingHistories);
+        } catch (error) {
+            next(error);
+        }
+    }
+    static async getTrainingHistoryById(req, res, next) {
+        try {
+            const { id } = req.params;
+            const trainingHistory = await TrainingHistory.findByPk(id);
+            res.json(trainingHistory);
         } catch (error) {
             next(error);
         }

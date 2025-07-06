@@ -67,6 +67,7 @@ class AuthController {
                 user: {
                     id: user.id,
                     email: user.email,
+                    isAdmin: user.isAdmin,
                 },
             });
         } catch (error) {
